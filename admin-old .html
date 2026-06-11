@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+<h1>ADMIN PANEL</h1>
+
+<div id="bookingList"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+const firebaseConfig = {
+apikey: "AIzaSyDnrjs5t1HJU9SCHg7gznPSsveEbRLpHans",
+authDomain: "ps-smartphone-shop.firebaseapp.com",
+databaseURL: "https://ps-smartphone-shop-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "ps-smartphone-shop",
+storageBucket: "ps-smartphone-shop.appspot.com",
+messagingSenderId: "255669720374",
+  appId: "1:255669720374:web:3f877e01751fb8b2688f97"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+get(ref(db,"bookings")).then((snapshot)=>{
+
+let html="";
+
+snapshot.forEach((child)=>{
+
+let data=child.val();
+
+html += `
+<div class="card">
+<h3>${data.bookingId}</h3>
+<p>Name: ${data.name}</p>
+<p>Mobile: ${data.mobile}</p>
+<p>Device: ${data.device}</p>
+<p>Status: ${data.status}</p>
+<p>Date:  ${data.date}</p>
+<p>Problem: ${data.problem || "No Problem"}</p>
+
+${data.image ? `
+<img src="${data.image}" width="120"
+style="border-radius:10px;margin:10px 0;border:2px solid #ffd700;">
+` : ""}
+<button onclick="deleteBooking('${data.bookingId}')"
+style="background:red;color:white;padding:10px;border:none;border-radius:8px;">
+Delete
+</button>
+
+<select id="${data.bookingId}">
+<option>Order Received</option>
+<option>Pickup Scheduled</option>
+<option>Picked Up</option>
+<option>Repair In Progress</option>
+<option>Completed</option>
+<option>Delivered</option>
+</select>
+
+<button onclick="updateStatus('${data.bookingId}')">
+Update
+</button>
+</div>
+`;
+});
+
+document.getElementById("bookingList").innerHTML=html;
+});
+
+window.updateStatus=function(id){
+
+let status=document.getElementById(id).value;
+
+update(ref(db,"bookings/"+id),{
+status:status
+});
+
+alert("Updated");
+}
+window.deleteBooking = function(id){
+    if(confirm("Delete booking?")){
+        remove(ref(db, "bookings/" + id))
+        .then(()=>{
+            alert("Booking Deleted");
+            location.reload();
+        })
+        .catch((error)=>{
+            alert(error);
+        });
+    }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repair Booking</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="title">
+<h1>REPAIR <span>BOOKING</span></h1>
+<p>Book your repair professionally</p>
+</div>
+
+<div class="form-box">
+
+<div class="grid">
+
+<div class="box">
+<h2>Customer Details</h2>
+
+<input type="text" placeholder="Full Name">
+<input type="tel" placeholder="Mobile Number">
+<input type="email" placeholder="Email (Optional)">
+<input type="text" placeholder="Address">
+
+<h2>Service Type</h2>
+
+<div class="radio-box">
+
+<label class="radio">
+<input type="radio" name="service" value="Store Visit">
+Store Visit
+</label>
+
+<label class="radio">
+<input type="radio" name="service" value="Pickup & Drop">
+Pickup & Drop
+</label>
+
+</div>
+
+<input type="date">
+<input type="time">
+</div>
+
+<div class="box">
+<h2>Device Details</h2>
+
+<select>
+<option>Select Device</option>
+<option>Mobile</option>
+<option>Laptop</option>
+</select>
+
+<input type="text" placeholder="Brand">
+<input type="text" placeholder="Model Name">
+
+<select>
+<option>Problem Type</option>
+<option>Screen Change</option>
+<option>Battery Issue</option>
+<option>Software Problem</option>
+<option>Dead Phone</option>
+</select>
+
+<textarea placeholder="Problem Details"></textarea>
+
+<input type="file">
+</div>
+
+</div>
+
+<div style="text-align:center;margin-top:25px;">
+<button id="confirmBtn">CONFIRM BOOKING</button>
+</div>
+
+</div>
+
+<div class="confirm" id="confirmBox">
+<h2>✅ Booking Confirmed!</h2>
+
+<p>Your repair request received successfully.</p>
+
+<div class="booking-id" id="bookingId"></div>
+
+<p style="margin-top:15px">
+Save Booking ID for tracking.
+</p>
+</div>
+
+<div class="track">
+
+<h2>Track Repair Status</h2>
+
+<input type="text" id="trackInput" placeholder="Enter Booking ID">
+
+<button onclick="trackNow()">TRACK NOW</button>
+
+<div class="status" id="statusBox">
+Repair Status: <b>In Progress 🔧</b>
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>PS Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+background:#0b0b0b;
+color:white;
+font-family:Arial;
+padding:20px;
+}
+.tabs{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+.tabBtn{
+padding:12px 20px;
+border:none;
+background:#ffd700;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+.section{
+display:none;
+}
+.active{
+display:block;
+}
+.card{
+background:#161616;
+padding:15px;
+border-radius:15px;
+margin-bottom:20px;
+}
+input,select,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:8px;
+}
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:8px;
+}
+.deleteBtn{
+background:red;
+color:white;
+}
+.addBtn{
+background:#ffd700;
+color:black;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 PS ADMIN PANEL</h1>
+
+<div class="tabs">
+<button class="tabBtn" onclick="showTab('repair')">
+🔧 Repair Tab
+</button>
+
+<button class="tabBtn" onclick="showTab('shop')">
+🛒 P.S Shop Tab
+</button>
+</div>
+
+<div id="repair" class="section active">
+<h2>Repair Orders</h2>
+<div id="bookingList"></div>
+</div>
+
+<div id="shop" class="section">
+<h2>Add Product</h2>
+
+<input id="pname" placeholder="Product Name">
+<input id="category" placeholder="Category">
+<input id="price" placeholder="Price">
+
+<select id="stock">
+<option>In Stock</option>
+<option>Out Of Stock</option>
+</select>
+
+<textarea id="details"
+placeholder="Product Details"></textarea>
+
+<input type="file"id="productImage">
+
+<button class="addBtn"
+onclick="addProduct()">
+Add Product
+</button>
+
+<hr>
+
+
+
+<h2>Products</h2>
+<div id="productList"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-storage.js";
+
+import {
+getDatabase,
+ref,
+get,
+set,
+update,
+remove
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyDnrjs5t1HJU9SCHg7gznPSsveEbRLpHans",
+authDomain:"ps-smartphone-shop.firebaseapp.com",
+databaseURL:"https://ps-smartphone-shop-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"ps-smartphone-shop",
+storageBucket:"ps-smartphone-shop.appspot.com",
+messagingSenderId:"255669720374",
+appId:"1:255669720374:web:3f877e01751fb8b2688f97"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window.db = db;
+const storage = getStorage(app);
+
+window.showTab=function(tab){
+document.getElementById("repair").style.display="none";
+document.getElementById("shop").style.display="none";
+document.getElementById(tab).style.display="block";
+};
+
+get(ref(db,"bookings")).then((snapshot)=>{
+
+let html="";
+
+snapshot.forEach((child)=>{
+
+let data=child.val();
+
+html += `
+<div class="card">
+<h3>${data.bookingId}</h3>
+
+<p>Name: ${data.name}</p>
+<p>Mobile: ${data.mobile}</p>
+<p>Device: ${data.device}</p>
+<p>Status: ${data.status}</p>
+<p>Date: ${data.date}</p>
+<p>Problem: ${data.problem || "No Problem"}</p>
+
+${data.image ? `
+<img src="${data.image}" width="120"
+style="border-radius:10px;margin:10px 0;border:2px solid #ffd700;">
+` : ""}
+
+<button class="deleteBtn"
+onclick="deleteBooking('${data.bookingId}')">
+Delete
+</button>
+
+<select id="${data.bookingId}">
+<option>Order Received</option>
+<option>Pickup Scheduled</option>
+<option>Picked Up</option>
+<option>Repair In Progress</option>
+<option>Completed</option>
+<option>Delivered</option>
+</select>
+
+<button onclick="updateStatus('${data.bookingId}')">
+Update
+</button>
+</div>
+`;
+});
+
+document.getElementById("bookingList").innerHTML=html;
+});
+
+
+window.updateStatus=function(id){
+
+let status=document.getElementById(id).value;
+
+update(ref(db,"bookings/"+id),{
+status:status
+});
+
+alert("Updated");
+}
+
+window.deleteBooking = function(id){
+if(confirm("Delete booking?")){
+
+remove(ref(db,"bookings/" + id))
+.then(()=>{
+alert("Booking Deleted");
+location.reload();
+})
+.catch((error)=>{
+alert(error);
+});
+
+}
+}
+
+window.addProduct = async function(){
+
+let name = document.getElementById("pname").value;
+let category = document.getElementById("category").value;
+let price = document.getElementById("price").value;
+let stock = document.getElementById("stock").value;
+let details = document.getElementById("details").value;
+let file = document.getElementById("productImage").files[0];
+
+let imageURL = "";
+
+if(file){
+
+const imageRef = storageRef(
+storage,
+"products/" + Date.now() + "_" + file.name
+);
+
+await uploadBytes(imageRef, file);
+
+imageURL = await getDownloadURL(imageRef);
+
+}
+
+let id = "P" + Date.now();
+
+set(ref(db,"products/"+id),{
+id:id,
+name:name,
+category:category,
+price:price,
+stock:stock,
+details:details,
+image:imageURL
+}).then(()=>{
+alert("Product Added");
+location.reload();
+})
+.catch((error)=>{
+  console.error(error);
+  alert(error.message);
+});
+
+}
+get(ref(db,"products")).then((snapshot)=>{
+
+let html="";
+
+snapshot.forEach((child)=>{
+
+let p = child.val();
+
+html += `
+<div class="card">
+<h3>${p.name}</h3>
+
+${p.image ? `
+<img src="${p.image}" width="120"
+style="border-radius:10px;margin:10px 0;border:2px solid #ffd700;">
+` : ""}
+
+<p>Category: ${p.category}</p>
+<p>Price: ₹${p.price}</p>
+<p>Stock: ${p.stock}</p>
+<p>${p.details}</p>
+
+<button class="deleteBtn"
+onclick="deleteProduct('${p.id}')">
+Delete Product
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("productList").innerHTML=html;
+
+});
+
+window.deleteProduct=function(id){
+
+if(confirm("Delete Product?")){
+
+remove(ref(db,"products/"+id))
+.then(()=>{
+alert("Product Deleted");
+location.reload();
+});
+
+}
+
+}
+</script>
+</body>
+</html>

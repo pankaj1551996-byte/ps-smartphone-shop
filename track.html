@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Repair</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+<h1>TRACK REPAIR STATUS</h1>
+
+<div class="track">
+<input type="text" id="trackInput" placeholder="Enter Booking ID">
+
+<button onclick="trackNow()">TRACK NOW</button>
+
+<div class="status" id="statusBox" style="display:none;">
+Repair Status: <b id="statusText"></b>
+</div>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnrjs5t1HJU9SCHg7gznPSsveEbRLpHans",
+authDomain: "ps-smartphone-shop.firebaseapp.com",
+  databaseURL: "https://ps-smartphone-shop-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "ps-smartphone-shop",
+storageBucket: "ps-smartphone-shop.appspot.com",
+messagingSenderId: "255669720374",
+  appId: "1:255669720374:web:3f877e01751fb8b2688f97"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+window.trackNow = function(){
+
+let bookingId =
+document.getElementById("trackInput").value;
+
+get(ref(database,"bookings/"+bookingId))
+.then((snapshot)=>{
+
+if(snapshot.exists()){
+
+let data=snapshot.val();
+
+document.getElementById("statusBox").style.display="block";
+document.getElementById("statusText").innerHTML =
+data.status;
+
+}
+else{
+alert("Booking ID not found");
+}
+});
+
+}
+
+</script>
+
+</body>
+</html>

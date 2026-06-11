@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P.S Smartphone & Laptop Solution</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+}
+
+/* TOPBAR */
+
+.topbar{
+background:black;
+padding:10px 4%;
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:#fdbb2d;
+flex-wrap:wrap;
+gap:10px;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:#0b1020;
+padding:15px 4%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+border-bottom:1px solid #222;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#fdbb2d;
+}
+
+.logo span{
+font-size:14px;
+color:white;
+display:block;
+}
+
+.search-box{
+display:flex;
+width:100%;
+max-width:350px;
+background:white;
+border-radius:5px;
+overflow:hidden;
+}
+
+.search-box input{
+flex:1;
+padding:12px;
+border:none;
+outline:none;
+}
+
+.search-box button{
+background:#fdbb2d;
+border:none;
+padding:0 18px;
+cursor:pointer;
+}
+
+/* MENU */
+
+.menu{
+display:flex;
+justify-content:center;
+gap:20px;
+padding:15px;
+flex-wrap:wrap;
+background:#070b18;
+}
+
+.menu a{
+text-decoration:none;
+color:white;
+font-size:15px;
+}
+
+.menu a:hover{
+color:#fdbb2d;
+}
+
+/* HERO */
+
+.hero{
+padding:50px 4%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:40px;
+flex-wrap:wrap;
+}
+
+.hero-text{
+flex:1;
+min-width:280px;
+}
+
+.hero-text h1{
+font-size:55px;
+line-height:65px;
+margin-bottom:20px;
+}
+
+.hero-text span{
+color:#fdbb2d;
+}
+
+.hero-text p{
+font-size:18px;
+color:#ccc;
+margin-bottom:25px;
+line-height:30px;
+}
+
+.btns{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:14px 28px;
+background:#fdbb2d;
+color:black;
+font-weight:bold;
+border-radius:6px;
+text-decoration:none;
+}
+
+.hero-image{
+flex:1;
+text-align:center;
+min-width:280px;
+}
+
+.hero-image img{
+width:100%;
+max-width:500px;
+}
+
+/* FEATURES */
+
+.features{
+padding:20px 4%;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.feature-box{
+background:#0b1020;
+padding:25px;
+border-radius:10px;
+text-align:center;
+border:1px solid #1f1f1f;
+}
+
+.feature-box i{
+font-size:40px;
+color:#fdbb2d;
+margin-bottom:15px;
+}
+
+/* CATEGORY */
+
+.section{
+padding:50px 4%;
+}
+
+.section-title{
+font-size:35px;
+margin-bottom:30px;
+color:#fdbb2d;
+}
+
+.category-grid,
+.product-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+}
+
+.card{
+background:#0b1020;
+padding:18px;
+border-radius:10px;
+text-align:center;
+border:1px solid #1c1c1c;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border:1px solid #fdbb2d;
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:contain;
+background:white;
+border-radius:10px;
+padding:10px;
+margin-bottom:15px;
+}
+
+.card h3{
+margin-bottom:10px;
+font-size:18px;
+}
+
+.price{
+font-size:22px;
+font-weight:bold;
+color:#fdbb2d;
+margin-bottom:15px;
+}
+
+.cart-btn{
+display:block;
+padding:12px;
+background:#fdbb2d;
+color:black;
+font-weight:bold;
+text-decoration:none;
+border-radius:5px;
+}
+
+/* PICKUP */
+
+.pickup{
+margin:40px 4%;
+background:#0b1020;
+padding:40px;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.pickup-text{
+flex:1;
+min-width:280px;
+}
+
+.pickup-text h2{
+font-size:45px;
+margin-bottom:15px;
+}
+
+.pickup-text p{
+color:#ccc;
+line-height:28px;
+margin-bottom:20px;
+}
+
+.pickup img{
+width:100%;
+max-width:350px;
+}
+
+/* FOOTER */
+
+.footer{
+background:black;
+padding:60px 4%;
+margin-top:50px;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+}
+
+.footer h3{
+margin-bottom:20px;
+color:#fdbb2d;
+}
+
+.footer p{
+margin-bottom:12px;
+color:#ccc;
+}
+
+.social{
+margin-top:20px;
+}
+
+.social i{
+font-size:25px;
+margin-right:15px;
+color:#fdbb2d;
+}
+
+.copy{
+text-align:center;
+padding-top:40px;
+color:#777;
+}
+
+/* WHATSAPP FLOAT */
+
+.whatsapp{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#25d366;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+color:white;
+text-decoration:none;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero-text h1{
+font-size:38px;
+line-height:50px;
+}
+
+.section-title{
+font-size:28px;
+}
+
+.pickup-text h2{
+font-size:32px;
+}
+
+.navbar{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.search-box{
+width:100%;
+}
+
+.menu{
+gap:12px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+<div>📍 Purnia, Bihar, India</div>
+<div>📞 +91 91234 56789</div>
+</div>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+P.S
+<span>SMARTPHONE & LAPTOP SOLUTION</span>
+</div>
+
+<div class="search-box">
+<input type="text" placeholder="Search products...">
+<button>
+<i class="fa fa-search"></i>
+</button>
+</div>
+
+</div>
+
+<!-- MENU -->
+
+<div class="menu">
+<a href="#">Home</a>
+<a href="#">Repair</a>
+<a href="#">Pickup</a>
+<a href="#">Shop</a>
+<a href="#">Contact</a>
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>
+P.S SMARTPHONE &
+<span>LAPTOP SOLUTION</span>
+</h1>
+
+<p>
+Mobile Repair, Laptop Repair,
+Accessories, Pickup & Drop Service,
+Tempered Glass, Covers, Chargers & More.
+</p>
+
+<div class="btns">
+<a href="book.html" class="btn">Book Repair</a>
+<a href="shop.html" class="btn">Shop Now</a>
+</div>
+
+</div>
+
+<div class="hero-image">
+<img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png">
+</div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+<div class="feature-box">
+<i class="fa fa-truck"></i>
+<h3>Pickup Service</h3>
+<p>Free Pickup & Drop</p>
+</div>
+
+<div class="feature-box">
+<i class="fa fa-tools"></i>
+<h3>Expert Repair</h3>
+<p>Professional Technicians</p>
+</div>
+
+<div class="feature-box">
+<i class="fa fa-shield"></i>
+<h3>Warranty</h3>
+<p>6 Months Warranty</p>
+</div>
+
+<div class="feature-box">
+<i class="fa fa-mobile"></i>
+<h3>Genuine Parts</h3>
+<p>100% Original Products</p>
+</div>
+
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="section">
+
+<h2 class="section-title">Top Categories</h2>
+
+<div class="category-grid">
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2706/2706950.png">
+<h3>Mobile Covers</h3>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png">
+<h3>Tempered Glass</h3>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/3687/3687412.png">
+<h3>Chargers</h3>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+<h3>Earphones</h3>
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCTS -->
+
+<section class="section">
+
+<h2 class="section-title">Best Selling Products</h2>
+
+<div class="product-grid">
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/3687/3687412.png">
+<h3>Fast Charging Cable</h3>
+<div class="price">₹199</div>
+<a href="#" class="cart-btn">Add To Cart</a>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png">
+<h3>Premium Tempered Glass</h3>
+<div class="price">₹149</div>
+<a href="#" class="cart-btn">Add To Cart</a>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2706/2706950.png">
+<h3>Mobile Back Cover</h3>
+<div class="price">₹249</div>
+<a href="#" class="cart-btn">Add To Cart</a>
+</div>
+
+<div class="card">
+<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+<h3>Bluetooth Earbuds</h3>
+<div class="price">₹899</div>
+<a href="#" class="cart-btn">Add To Cart</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- PICKUP -->
+
+<section class="pickup">
+
+<div class="pickup-text">
+
+<h2>Pickup & Drop Service</h2>
+
+<p>
+We pickup your device from your location
+and deliver safely after repair.
+</p>
+
+<a href="#" class="btn">Book Now</a>
+
+</div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/869/869636.png">
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+<h3>P.S Smartphone Solution</h3>
+
+<p>
+Professional Mobile & Laptop
+Repair Service Center.
+</p>
+
+<div class="social">
+<i class="fab fa-facebook"></i>
+<i class="fab fa-instagram"></i>
+<i class="fab fa-whatsapp"></i>
+<i class="fab fa-youtube"></i>
+</div>
+
+</div>
+
+<div>
+<h3>Quick Links</h3>
+<p>Home</p>
+<p>Repair Services</p>
+<p>Pickup & Drop</p>
+<p>Shop</p>
+</div>
+
+<div>
+<h3>Services</h3>
+<p>Mobile Repair</p>
+<p>Laptop Repair</p>
+<p>Screen Replacement</p>
+<p>Software Install</p>
+</div>
+
+<div>
+<h3>Contact</h3>
+<p>📞 +91 91234 56789</p>
+<p>📍 Purnia, Bihar</p>
+<p>✉ pssmartsolution@gmail.com</p>
+</div>
+
+</div>
+
+<div class="copy">
+© 2026 P.S Smartphone & Laptop Solution
+</div>
+
+</footer>
+
+<!-- WHATSAPP -->
+
+<a href="#" class="whatsapp">
+<i class="fab fa-whatsapp"></i>
+</a>
+<script type="module" src="script.js"></script>
+</body>
+</html>
